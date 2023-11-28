@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "https://ergoglobe.github.io/weight-and-balance/browser/",
             "outputPath": "dist/weight-and-balance",
             "index": "src/index.html",
             "browser": "src/main.ts",
