@@ -11,7 +11,7 @@
   </mat-select>
 </mat-form-field>
 
-<mat-grid-list cols="4" rowHeight="100px" gutterSize="10px">
+<mat-grid-list cols="4" rowHeight="50px" gutterSize="10px">
   <mat-grid-tile>Item</mat-grid-tile>
   <mat-grid-tile>Weight (Lbs)</mat-grid-tile>
   <mat-grid-tile>Arm Aft Datum(In)</mat-grid-tile>
@@ -25,7 +25,7 @@
   <mat-grid-tile>Front Seat Occupants</mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field>
-      <input matInput type="number" [value]="frontSeatWB.Weight" (change)="updateWB($event, 'frontSeatWB')">
+      <input matInput type="number"  [value]="frontSeatWB.Weight" (change)="updateWB($event, 'frontSeatWB')">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>{{frontSeatWB.Arm}}</mat-grid-tile>
