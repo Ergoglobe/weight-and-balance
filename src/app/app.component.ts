@@ -53,16 +53,25 @@ export class AppComponent {
         this.fuelWB.Moment = this.fuelWB.Weight * this.fuelWB.Arm;
         break;
       }
+      case("fuelBurnWB") :{
+        this.fuelBurnWB.Weight = Number($event.target.value);
+        this.fuelBurnWB.Moment = this.fuelBurnWB.Weight * this.fuelBurnWB.Arm;
+        break;
+      }
     }
 
     this.rampWeightWB.Weight = this.airplane.Weight + this.frontSeatWB.Weight + this.rearSeatWB.Weight + this.fuelWB.Weight;
     this.rampWeightWB.Moment = this.airplane.Moment + this.frontSeatWB.Moment + this.rearSeatWB.Moment + this.fuelWB.Moment;
-    this.rampWeightWB.Arm = this.rampWeightWB.Moment / this.rampWeightWB.Weight;
+    this.rampWeightWB.Arm = Number((this.rampWeightWB.Moment / this.rampWeightWB.Weight).toFixed(3));
 
     // use + because values are already negative
     this.takeoffWB.Weight = this.rampWeightWB.Weight + this.fuelAllowanceWB.Weight;
     this.takeoffWB.Moment = this.rampWeightWB.Moment + this.fuelAllowanceWB.Moment;
-    this.takeoffWB.Arm = this.takeoffWB.Moment / this.takeoffWB.Weight;
+    this.takeoffWB.Arm = Number((this.takeoffWB.Moment / this.takeoffWB.Weight).toFixed(3));
+
+    this.landingWB.Weight = Number(( this.takeoffWB.Weight + this.fuelBurnWB.Weight).toFixed(3));
+    this.landingWB.Moment = this.takeoffWB.Moment + this.fuelBurnWB.Moment;
+    this.landingWB.Arm = Number((this.landingWB.Moment / this.landingWB.Weight).toFixed(3));
 
   }
 
@@ -78,6 +87,8 @@ export class AppComponent {
   rampWeightWB: WBrow;
   fuelAllowanceWB: WBrow;
   takeoffWB: WBrow;
+  fuelBurnWB: WBrow;
+  landingWB: WBrow;
 
   airplaneSelected($event: string) {
     console.log($event)
@@ -141,6 +152,18 @@ export class AppComponent {
       "Moment" : -760,
     };
     this.takeoffWB= {
+      "Weight" : 0,
+      "Arm" : 0,
+      "Moment" : 0,
+    };
+
+    this.fuelBurnWB= {
+      "Weight" : 0,
+      "Arm" : 95.0,
+      "Moment" : 0,
+    };
+
+    this.landingWB= {
       "Weight" : 0,
       "Arm" : 0,
       "Moment" : 0,

@@ -43,7 +43,7 @@
   <mat-grid-tile>Fuel (48gal Max)</mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field>
-      <input matInput type="number" [value]="fuelWB.Weight" (change)="updateWB($event, 'fuelWB')">
+      <input matInput type="number" name="fuelWB" [value]="fuelWB.Weight" (change)="updateWB($event, 'fuelWB')">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>{{fuelWB.Arm}}</mat-grid-tile>
@@ -63,6 +63,20 @@
   <mat-grid-tile>{{takeoffWB.Weight}}</mat-grid-tile>
   <mat-grid-tile>{{takeoffWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{takeoffWB.Moment}}</mat-grid-tile>
+
+  <mat-grid-tile>Fuel Burn</mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field>
+      <input matInput type="number" max="0" [value]="fuelBurnWB.Weight" (change)="updateWB($event, 'fuelBurnWB')">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>{{fuelBurnWB.Arm}}</mat-grid-tile>
+  <mat-grid-tile>{{fuelBurnWB.Moment}}</mat-grid-tile>
+
+  <mat-grid-tile>Landing Weight</mat-grid-tile>
+  <mat-grid-tile>{{landingWB.Weight}}</mat-grid-tile>
+  <mat-grid-tile>{{landingWB.Arm}}</mat-grid-tile>
+  <mat-grid-tile>{{landingWB.Moment}}</mat-grid-tile>
 
 </mat-grid-list>
 
