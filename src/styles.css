@@ -2,3 +2,11 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.bottom-border-header {
+    border-bottom: .2rem solid;
+}
+
+.takeoff-landing-weight {
+    border-top: .2rem solid;
+}

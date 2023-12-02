@@ -1,6 +1,7 @@
-<mat-form-field>
+
+<mat-form-field style="width: 100%;">
   <mat-label>
-    Airplane
+    Choose Your Airplane
   </mat-label>
 
   <mat-select (valueChange)="airplaneSelected($event)">
@@ -11,18 +12,24 @@
   </mat-select>
 </mat-form-field>
 
-<mat-grid-list cols="4" rowHeight="50px" gutterSize="10px">
-  <mat-grid-tile>Item</mat-grid-tile>
-  <mat-grid-tile>Weight (Lbs)</mat-grid-tile>
-  <mat-grid-tile>Arm Aft Datum(In)</mat-grid-tile>
-  <mat-grid-tile>Moment(In-Lbs)</mat-grid-tile>
+<div>
+  IT IS THE RESPONSIBILITY OF THE PILOT AND AIRCRAFT OWNER
+TO ENSURE THAT THE AIRPLANE IS LOADED PROPERLY.
+</div>
 
-  <mat-grid-tile>Basic Empty Weight</mat-grid-tile>
+<mat-grid-list cols="4" rowHeight="50px" gutterSize="0px">
+
+  <mat-grid-tile class="bottom-border-header">Item</mat-grid-tile>
+  <mat-grid-tile class="bottom-border-header">Weight (Lbs)</mat-grid-tile>
+  <mat-grid-tile class="bottom-border-header">Arm Aft Datum(In)</mat-grid-tile>
+  <mat-grid-tile class="bottom-border-header">Moment(In-Lbs)</mat-grid-tile>
+
+  <mat-grid-tile>BEW</mat-grid-tile>
   <mat-grid-tile>{{airplane.Weight}}</mat-grid-tile>
   <mat-grid-tile>{{airplane.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{airplane.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Front Seat Occupants</mat-grid-tile>
+  <mat-grid-tile>Front Seat</mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field>
       <input matInput type="number"  [value]="frontSeatWB.Weight" (change)="updateWB($event, 'frontSeatWB')">
@@ -31,7 +38,7 @@
   <mat-grid-tile>{{frontSeatWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{frontSeatWB.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Rear Seat Occupant</mat-grid-tile>
+  <mat-grid-tile>Rear Seat</mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field>
       <input matInput type="number" [value]="rearSeatWB.Weight" (change)="updateWB($event, 'rearSeatWB')">
@@ -40,7 +47,7 @@
   <mat-grid-tile>{{rearSeatWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{rearSeatWB.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Fuel (48gal Max)</mat-grid-tile>
+  <mat-grid-tile>Fuel <=48gal</mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field>
       <input matInput type="number" name="fuelWB" [value]="fuelWB.Weight" (change)="updateWB($event, 'fuelWB')">
@@ -54,15 +61,15 @@
   <mat-grid-tile>{{rampWeightWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{rampWeightWB.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Fuel Allowance</mat-grid-tile>
+  <mat-grid-tile>Fuel Allow.</mat-grid-tile>
   <mat-grid-tile>{{fuelAllowanceWB.Weight}}</mat-grid-tile>
   <mat-grid-tile>{{fuelAllowanceWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{fuelAllowanceWB.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Takeoff Weight</mat-grid-tile>
-  <mat-grid-tile>{{takeoffWB.Weight}}</mat-grid-tile>
-  <mat-grid-tile>{{takeoffWB.Arm}}</mat-grid-tile>
-  <mat-grid-tile>{{takeoffWB.Moment}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">TO Weight</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{takeoffWB.Weight}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{takeoffWB.Arm}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{takeoffWB.Moment}}</mat-grid-tile>
 
   <mat-grid-tile>Fuel Burn</mat-grid-tile>
   <mat-grid-tile>
@@ -73,11 +80,17 @@
   <mat-grid-tile>{{fuelBurnWB.Arm}}</mat-grid-tile>
   <mat-grid-tile>{{fuelBurnWB.Moment}}</mat-grid-tile>
 
-  <mat-grid-tile>Landing Weight</mat-grid-tile>
-  <mat-grid-tile>{{landingWB.Weight}}</mat-grid-tile>
-  <mat-grid-tile>{{landingWB.Arm}}</mat-grid-tile>
-  <mat-grid-tile>{{landingWB.Moment}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">LDG Weight</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{landingWB.Weight}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{landingWB.Arm}}</mat-grid-tile>
+  <mat-grid-tile class="takeoff-landing-weight">{{landingWB.Moment}}</mat-grid-tile>
 
 </mat-grid-list>
 
-<router-outlet></router-outlet>
+<div style="text-align: center;" >
+  <a href='https://flygateway.org/wp-content/uploads/2023/05/VB-2960_thru_R01_5.5x8.5_doublesided_color.pdf#page=192'>Weight vs CG Envelope POH</a>
+</div>
+
+<div>
+  <canvas id="WeightAndBalanceChart">{{chart}}</canvas>
+</div>

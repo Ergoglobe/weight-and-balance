@@ -8,6 +8,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 
+import { Chart } from 'chart.js/auto';
+
 type AirplaneWBRevision = {
   "Tail" : string,
   "Date" : string,
@@ -35,6 +37,92 @@ type WBrow = {
 })
 export class AppComponent {
 
+  public chart:any = [];
+
+  createChart() {
+    this.chart = new Chart("WeightAndBalanceChart", {
+      type: 'scatter', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+	       datasets: [
+          {
+            label: 'Envelope',
+            data: [
+              {x:82,y:1200},
+              {x:93,y:1200},
+              {x:93,y:2550},
+              {x:88.4,y:2550},
+              {x:82,y:2050},
+              {x:82,y:1200},
+            ],
+            showLine: true,
+          },
+          { // takeoff
+            label: 'TO W&B',
+            data: [],
+          },
+          { // landing
+            label: 'LDG W&B',
+            data: [],
+          },
+        ]
+      },
+      options: {
+        responsive: true,
+        aspectRatio:1,
+        plugins: {
+          title: {
+            display: false,
+            text: 'Weight vs CG Envelope'
+          },
+          subtitle: {
+            display: true,
+            text: '2550 Lbs Max Gross Wt'
+          }
+
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              text: 'CG Location (Inches Aft Datum)',
+              display: true,
+              font: {
+                family: 'Times',
+                size: 20,
+                style: 'normal',
+                lineHeight: 1.2
+              },
+            }
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Airplane Weight Lbs',
+              font: {
+                family: 'Times',
+                size: 20,
+                style: 'normal',
+                lineHeight: 1.2
+              },
+              
+            }
+          }
+
+        }
+      }
+      
+    });
+  }
+  
+  
+  ngOnInit(): void {
+    this.createChart();
+    this.chart.update();
+  }
+  
+  
   updateWB($event:any, rowName:string ) {
 
     switch( rowName ) {
@@ -61,17 +149,21 @@ export class AppComponent {
     }
 
     this.rampWeightWB.Weight = this.airplane.Weight + this.frontSeatWB.Weight + this.rearSeatWB.Weight + this.fuelWB.Weight;
-    this.rampWeightWB.Moment = this.airplane.Moment + this.frontSeatWB.Moment + this.rearSeatWB.Moment + this.fuelWB.Moment;
+    this.rampWeightWB.Moment =  Number((this.airplane.Moment + this.frontSeatWB.Moment + this.rearSeatWB.Moment + this.fuelWB.Moment).toFixed(3));
     this.rampWeightWB.Arm = Number((this.rampWeightWB.Moment / this.rampWeightWB.Weight).toFixed(3));
 
     // use + because values are already negative
-    this.takeoffWB.Weight = this.rampWeightWB.Weight + this.fuelAllowanceWB.Weight;
-    this.takeoffWB.Moment = this.rampWeightWB.Moment + this.fuelAllowanceWB.Moment;
+    this.takeoffWB.Weight = Number((this.rampWeightWB.Weight + this.fuelAllowanceWB.Weight).toFixed(3));
+    this.takeoffWB.Moment = Number((this.rampWeightWB.Moment + this.fuelAllowanceWB.Moment).toFixed(3));
     this.takeoffWB.Arm = Number((this.takeoffWB.Moment / this.takeoffWB.Weight).toFixed(3));
 
     this.landingWB.Weight = Number(( this.takeoffWB.Weight + this.fuelBurnWB.Weight).toFixed(3));
-    this.landingWB.Moment = this.takeoffWB.Moment + this.fuelBurnWB.Moment;
+    this.landingWB.Moment = Number((this.takeoffWB.Moment + this.fuelBurnWB.Moment).toFixed(3));
     this.landingWB.Arm = Number((this.landingWB.Moment / this.landingWB.Weight).toFixed(3));
+
+    this.chart.data.datasets[1].data[0] = {x:this.takeoffWB.Arm, y:this.takeoffWB.Weight}; // update chart for new WB
+    this.chart.data.datasets[2].data[0] = {x:this.landingWB.Arm, y:this.landingWB.Weight}; // update chart for new WB
+    this.chart.update();
 
   }
 
