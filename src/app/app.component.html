@@ -12,10 +12,26 @@
   </mat-select>
 </mat-form-field>
 
-<div>
+<div style="text-align: center;" >
   IT IS THE RESPONSIBILITY OF THE PILOT AND AIRCRAFT OWNER
 TO ENSURE THAT THE AIRPLANE IS LOADED PROPERLY.
 </div>
+
+<mat-grid-list cols="2" rowHeight="25px">
+  <mat-grid-tile>
+    <div style="text-align: center;" >
+      <a href='https://flygateway.org/wp-content/uploads/2023/05/VB-2960_thru_R01_5.5x8.5_doublesided_color.pdf#page=192'>Weight vs CG Envelope POH</a>
+    </div>    
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div style="text-align: center;" *ngIf="airplane.PDF != ''">
+      <a href={{airplane.PDF}}>{{airplane.Tail}} Weight and Balance</a>
+    </div>    
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
 
 <mat-grid-list cols="4" rowHeight="50px" gutterSize="0px">
 
@@ -87,9 +103,6 @@ TO ENSURE THAT THE AIRPLANE IS LOADED PROPERLY.
 
 </mat-grid-list>
 
-<div style="text-align: center;" >
-  <a href='https://flygateway.org/wp-content/uploads/2023/05/VB-2960_thru_R01_5.5x8.5_doublesided_color.pdf#page=192'>Weight vs CG Envelope POH</a>
-</div>
 
 <div>
   <canvas id="WeightAndBalanceChart">{{chart}}</canvas>
